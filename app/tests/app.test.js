@@ -1,16 +1,14 @@
-import request from "supertest";
+import test from "node:test";
+import assert from "node:assert";
 import express from "express";
-import { jest } from "@jest/globals";
+import request from "supertest";
 
-const buildApp = () => {
-  const app = express();
-  app.get("/", (req, res) => res.json({ ok: true }));
-  return app;
-};
+const app = express();
+app.get("/", (req, res) => res.json({ ok: true }));
 
 test("GET / returns ok", async () => {
-  const app = buildApp();
   const res = await request(app).get("/");
-  expect(res.statusCode).toBe(200);
-  expect(res.body.ok).toBe(true);
+  assert.strictEqual(res.statusCode, 200);
+  assert.strictEqual(res.body.ok, true);
 });
+
